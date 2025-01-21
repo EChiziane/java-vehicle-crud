@@ -18,5 +18,5 @@ public class Vehicle {
     private String manufacturer;
     private String manufacturedYear;
     private String licensePlate;
-  private Double dailyRentalPrice;
+    private Double dailyRentalPrice;
 }
