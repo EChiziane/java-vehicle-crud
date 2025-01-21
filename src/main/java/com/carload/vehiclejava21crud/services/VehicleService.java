@@ -21,26 +21,24 @@ public class VehicleService {
         return vehicleRepository.findAll();
     }
 
-    public Vehicle SaveVehicle(Vehicle vehicle) {
-        return vehicleRepository.save(vehicle);
-
-    }
-
     public Optional<Vehicle> getVehicleById(UUID id) {
         return vehicleRepository.findById(id);
     }
 
-    public void deleteVehicleById(UUID id) {
-        vehicleRepository.deleteById(id);
-
-    }
-
-    public void deleteAllVehicles() {
-        vehicleRepository.deleteAll();
+    public Vehicle saveVehicle(Vehicle vehicle) {
+        return vehicleRepository.save(vehicle);
     }
 
     public Vehicle updateVehicle(Vehicle vehicle) {
         return vehicleRepository.save(vehicle);
+    }
+
+    public void deleteVehicleById(UUID id) {
+        vehicleRepository.deleteById(id);
+    }
+
+    public boolean existsById(UUID id) {
+        return vehicleRepository.existsById(id);
     }
 }
 

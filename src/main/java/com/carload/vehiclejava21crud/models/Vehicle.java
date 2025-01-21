@@ -19,4 +19,52 @@ public class Vehicle {
     private String manufacturedYear;
     private String licensePlate;
     private Double dailyRentalPrice;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public String getManufacturedYear() {
+        return manufacturedYear;
+    }
+
+    public void setManufacturedYear(String manufacturedYear) {
+        this.manufacturedYear = manufacturedYear;
+    }
+
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
+    }
+
+    public Double getDailyRentalPrice() {
+        return dailyRentalPrice;
+    }
+
+    public void setDailyRentalPrice(Double dailyRentalPrice) {
+        this.dailyRentalPrice = dailyRentalPrice;
+    }
 }

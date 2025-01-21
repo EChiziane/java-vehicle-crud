@@ -7,9 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
-
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -23,29 +21,40 @@ public class VehicleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Vehicle>> showAllVehicles() {
-        return ResponseEntity.status(HttpStatus.OK).body(vehicleService.getAllVehicles());
+    public ResponseEntity<List<Vehicle>> getAllVehicles() {
+        List<Vehicle> vehicles = vehicleService.getAllVehicles();
+        return ResponseEntity.ok(vehicles);
     }
 
     @PostMapping
-    public ResponseEntity<Vehicle> addVehicle(@RequestBody Vehicle vehicle) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(vehicleService.SaveVehicle(vehicle));
+    public ResponseEntity<Vehicle> createVehicle(@RequestBody Vehicle vehicle) {
+        Vehicle savedVehicle = vehicleService.saveVehicle(vehicle);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedVehicle);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Vehicle>> getVehicleById(@PathVariable UUID id) {
-        return ResponseEntity.status(HttpStatus.OK).body(vehicleService.getVehicleById(id));
+    public ResponseEntity<Vehicle> getVehicleById(@PathVariable UUID id) {
+        return vehicleService.getVehicleById(id)
+                .map(vehicle -> ResponseEntity.ok(vehicle))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Vehicle> deleteVehicle(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteVehicle(@PathVariable UUID id) {
+        if (!vehicleService.existsById(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
         vehicleService.deleteVehicleById(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Vehicle> updateVehicle(@PathVariable UUID id, @RequestBody Vehicle vehicle) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(vehicleService.updateVehicle(vehicle));
+        if (!vehicleService.existsById(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        vehicle.setId(id); // Garantir que o ID do veículo seja o mesmo da URL
+        Vehicle updatedVehicle = vehicleService.updateVehicle(vehicle);
+        return ResponseEntity.ok(updatedVehicle);
     }
-
 }
