@@ -1,31 +1,13 @@
 package com.carload.vehiclejava21crud.models;
 
-import jakarta.persistence.*;
+public class EmployeeInputDto {
 
-import java.io.Serial;
-import java.util.UUID;
-@Entity
-@Table(name = "employees1")
-public class Employee {
-    @Serial
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
     private String firstName;
     private String lastName;
     private String email;
     private String phone;
     private EmployeeStatus status; // Active, Inactive
-    private EmployeeGender gender; // Male, Female, Other
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
+    private EmployeeGender genero; // Male, Female, Other
 
     public String getFirstName() {
         return firstName;
@@ -67,11 +49,11 @@ public class Employee {
         this.status = status;
     }
 
-    public EmployeeGender getGender() {
-        return gender;
+    public EmployeeGender getGenero() {
+        return genero;
     }
 
-    public void setGender(EmployeeGender gender) {
-        this.gender = gender;
+    public void setGenero(EmployeeGender genero) {
+        this.genero = genero;
     }
 }

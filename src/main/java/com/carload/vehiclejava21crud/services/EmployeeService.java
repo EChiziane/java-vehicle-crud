@@ -1,9 +1,11 @@
 package com.carload.vehiclejava21crud.services;
 
 import com.carload.vehiclejava21crud.models.Employee;
+import com.carload.vehiclejava21crud.models.EmployeeStatus;
 import com.carload.vehiclejava21crud.repositories.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 @Service
@@ -19,10 +21,18 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
+
+    public List<Employee> getActiveEmployees() {
+        return  employeeRepository.findByStatus(EmployeeStatus.ATIVO);
+    }
+
+    public List<Employee> getNonActiveEmployees() {
+        return  employeeRepository.findByStatus(EmployeeStatus.INATIVO);
+    }
+
     public Employee getEmployeeById(UUID id) {
             return employeeRepository.findById(id).orElse(null);
     }
-
     public Employee addEmployee(Employee employee) {
         return employeeRepository.save(employee);
     }
@@ -32,4 +42,5 @@ public class EmployeeService {
     public void deleteEmployee(UUID id) {
         employeeRepository.deleteById(id);
     }
+
 }
