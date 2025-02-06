@@ -1,7 +1,7 @@
 package com.carload.vehiclejava21crud.models;
 
 public enum EmployeeGender {
-    MASCULINE("masculine"), FEMININE("feminine");
+    MASCULINO("masculine"), FEMENINO("feminine");
 
     private String gender;
     private EmployeeGender(String gender) {
