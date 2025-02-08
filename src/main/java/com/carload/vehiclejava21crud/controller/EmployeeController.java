@@ -1,13 +1,13 @@
 package com.carload.vehiclejava21crud.controller;
 
-
-import com.carload.vehiclejava21crud.models.Employee;
-import com.carload.vehiclejava21crud.models.EmployeeInputDto;
-import com.carload.vehiclejava21crud.models.EmployeeOutputDto;
+import com.carload.vehiclejava21crud.models.EmployeeEntity;
+import com.carload.vehiclejava21crud.models.dtos.EmployeeInputDto;
+import com.carload.vehiclejava21crud.models.dtos.EmployeeOutputDto;
 import com.carload.vehiclejava21crud.services.EmployeeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -22,32 +22,35 @@ public class EmployeeController {
 
     @GetMapping
     public List<EmployeeOutputDto> getAllEmployees() {
-        List<EmployeeOutputDto> employees = employeeService.getAllEmployees().stream().map(EmployeeOutputDto::new).toList();
-        return employees;
+        return convertToDtoList(employeeService.getAllEmployees());
     }
-
 
     @GetMapping("/active")
     public List<EmployeeOutputDto> getActiveEmployees() {
-        List<EmployeeOutputDto>employees = employeeService.getActiveEmployees().stream().map(EmployeeOutputDto::new).toList();
-        return employees;
+        return convertToDtoList(employeeService.getActiveEmployees());
     }
 
     @GetMapping("/nonactive")
     public List<EmployeeOutputDto> getNonActiveEmployees() {
-        List<EmployeeOutputDto>employees = employeeService.getNonActiveEmployees().stream().map(EmployeeOutputDto::new).toList();
-        return employees;
+        return convertToDtoList(employeeService.getInactiveEmployees());
     }
 
     @PostMapping
-    public Employee addEmployee(@RequestBody EmployeeInputDto employeeRequest) {
-        Employee employee = new Employee();
-        employee.setLastName(employeeRequest.getFirstName());
-        employee.setFirstName(employeeRequest.getLastName());
+    public EmployeeOutputDto addEmployee(@RequestBody EmployeeInputDto employeeRequest) {
+        EmployeeEntity employee = new EmployeeEntity();
+        employee.setFirstName(employeeRequest.getFirstName());
+        employee.setLastName(employeeRequest.getLastName());
         employee.setEmail(employeeRequest.getEmail());
         employee.setStatus(employeeRequest.getStatus());
         employee.setGender(employeeRequest.getGenero());
         employee.setPhone(employeeRequest.getPhone());
-        return employeeService.addEmployee(employee);
+
+        EmployeeEntity savedEmployee = employeeService.addEmployee(employee);
+        return new EmployeeOutputDto(savedEmployee);
+    }
+
+    // Método auxiliar para converter listas
+    private List<EmployeeOutputDto> convertToDtoList(List<EmployeeEntity> employees) {
+        return employees.stream().map(EmployeeOutputDto::new).collect(Collectors.toList());
     }
 }

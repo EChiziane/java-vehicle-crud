@@ -1,38 +1,48 @@
 package com.carload.vehiclejava21crud.services;
 
-import com.carload.vehiclejava21crud.models.Student;
+import com.carload.vehiclejava21crud.models.StudentEntity;
 import com.carload.vehiclejava21crud.repositories.StudentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+
 @Service
+@RequiredArgsConstructor
 public class StudentService {
 
-private final StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
 
-public StudentService(StudentRepository studentRepository) {
-    this.studentRepository = studentRepository;
-}
+    public List<StudentEntity> findAll() {
+        return studentRepository.findAll();
+    }
 
-public void save(Student student) {
-    studentRepository.save(student);
-}
+    public Optional<StudentEntity> findById(UUID id) {
+        return studentRepository.findById(id);
+    }
 
-public List<Student> findAll() {
-    return this.studentRepository.findAll();
-}
+    @Transactional
+    public StudentEntity save(StudentEntity studentEntity) {
+        return studentRepository.save(studentEntity);
+    }
 
-public Student findById(UUID id) {
-    return this.studentRepository.findById(id).orElse(null);
+    @Transactional
+    public StudentEntity update(StudentEntity studentEntity) {
+        if (!existsById(studentEntity.getId())) {
+            throw new IllegalArgumentException("Student not found with ID: " + studentEntity.getId());
+        }
+        return studentRepository.save(studentEntity);
+    }
 
-}
+    @Transactional
+    public void deleteById(UUID id) {
+        studentRepository.deleteById(id);
+    }
 
-public void deleteById(UUID id) {
-    this.studentRepository.deleteById(id);
-}
-
-public void update(Student student) {
-    this.studentRepository.save(student);
-}
+    public boolean existsById(UUID id) {
+        return studentRepository.existsById(id);
+    }
 }

@@ -1,6 +1,6 @@
 package com.carload.vehiclejava21crud.controller;
 
-import com.carload.vehiclejava21crud.models.Student;
+import com.carload.vehiclejava21crud.models.StudentEntity;
 import com.carload.vehiclejava21crud.services.StudentService;
 
 
@@ -30,20 +30,20 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<Student> showAllStudents() {
-        List<Student> students = studentService.findAll();
-        return students;
+    public List<StudentEntity> showAllStudents() {
+        List<StudentEntity> studentEntities = studentService.findAll();
+        return studentEntities;
 
     }
     @PostMapping
-    public Student createStudent(@RequestBody Student student) {
-        studentService.save(student);
-        return student;
+    public StudentEntity createStudent(@RequestBody StudentEntity studentEntity) {
+        studentService.save(studentEntity);
+        return studentEntity;
     }
 
     @GetMapping("/pdf")
     public ResponseEntity<byte[]> generatePdf() {
-        List<Student> students = studentService.findAll();
+        List<StudentEntity> studentEntities = studentService.findAll();
 
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
             PdfWriter writer = new PdfWriter(outputStream);
@@ -61,12 +61,12 @@ public class StudentController {
             table.addCell(new Cell().add(new Paragraph("Data de Nascimento")).setBold());
 
             // Preenchendo a tabela com os dados dos estudantes
-            for (Student student : students) {
-                table.addCell(new Cell().add(new Paragraph(student.getId().toString())));
-                table.addCell(new Cell().add(new Paragraph(student.getFirstName())));
-                table.addCell(new Cell().add(new Paragraph(student.getLastName())));
-                table.addCell(new Cell().add(new Paragraph(student.getEmail())));
-                table.addCell(new Cell().add(new Paragraph(student.getBirthday())));
+            for (StudentEntity studentEntity : studentEntities) {
+                table.addCell(new Cell().add(new Paragraph(studentEntity.getId().toString())));
+                table.addCell(new Cell().add(new Paragraph(studentEntity.getFirstName())));
+                table.addCell(new Cell().add(new Paragraph(studentEntity.getLastName())));
+                table.addCell(new Cell().add(new Paragraph(studentEntity.getEmail())));
+                table.addCell(new Cell().add(new Paragraph(studentEntity.getBirthday())));
             }
 
             document.add(table);

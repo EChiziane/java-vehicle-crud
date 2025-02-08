@@ -1,46 +1,62 @@
 package com.carload.vehiclejava21crud.services;
 
-import com.carload.vehiclejava21crud.models.Employee;
+import com.carload.vehiclejava21crud.models.EmployeeEntity;
 import com.carload.vehiclejava21crud.models.EmployeeStatus;
 import com.carload.vehiclejava21crud.repositories.EmployeeRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+
 @Service
+@RequiredArgsConstructor
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
-    public EmployeeService(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
-
-    public List<Employee> getAllEmployees() {
+    public List<EmployeeEntity> getAllEmployees() {
         return employeeRepository.findAll();
     }
 
-
-    public List<Employee> getActiveEmployees() {
-        return  employeeRepository.findByStatus(EmployeeStatus.ATIVO);
+    public List<EmployeeEntity> getActiveEmployees() {
+        return employeeRepository.findByStatus(EmployeeStatus.ATIVO);
     }
 
-    public List<Employee> getNonActiveEmployees() {
-        return  employeeRepository.findByStatus(EmployeeStatus.INATIVO);
+    public List<EmployeeEntity> getInactiveEmployees() {
+        return employeeRepository.findByStatus(EmployeeStatus.INATIVO);
     }
 
-    public Employee getEmployeeById(UUID id) {
-            return employeeRepository.findById(id).orElse(null);
+    public Optional<EmployeeEntity> getEmployeeById(UUID id) {
+        return employeeRepository.findById(id);
     }
-    public Employee addEmployee(Employee employee) {
+
+    @Transactional
+    public EmployeeEntity addEmployee(EmployeeEntity employee) {
         return employeeRepository.save(employee);
     }
-    public Employee updateEmployee(UUID id, Employee employee) {
-        return employeeRepository.findById(id).orElse(null);
+
+    @Transactional
+    public EmployeeEntity updateEmployee(UUID id, EmployeeEntity updatedEmployee) {
+        return employeeRepository.findById(id)
+                .map(existingEmployee -> {
+                    updatedEmployee.setId(existingEmployee.getId()); // Garante que o ID permanece o mesmo
+                    return employeeRepository.save(updatedEmployee);
+                })
+                .orElseThrow(() -> new IllegalArgumentException("Employee not found with ID: " + id));
     }
+
+    @Transactional
     public void deleteEmployee(UUID id) {
+        if (!employeeRepository.existsById(id)) {
+            throw new IllegalArgumentException("Employee not found with ID: " + id);
+        }
         employeeRepository.deleteById(id);
     }
 
+    public boolean existsById(UUID id) {
+        return employeeRepository.existsById(id);
+    }
 }

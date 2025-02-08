@@ -1,4 +1,4 @@
-package com.carload.vehiclejava21crud.models;
+package com.carload.vehiclejava21crud.models.dtos;
 
 public class VehicleInputDto {
     public String model;

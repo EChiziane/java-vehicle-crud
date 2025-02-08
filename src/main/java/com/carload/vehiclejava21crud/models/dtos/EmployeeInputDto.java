@@ -1,4 +1,7 @@
-package com.carload.vehiclejava21crud.models;
+package com.carload.vehiclejava21crud.models.dtos;
+
+import com.carload.vehiclejava21crud.models.EmployeeGender;
+import com.carload.vehiclejava21crud.models.EmployeeStatus;
 
 public class EmployeeInputDto {
 

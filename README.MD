@@ -52,5 +52,5 @@ Este é um projeto de estudo desenvolvido para praticar a implementação de um 
 ### Passos
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seuusuario/vehicle-crud.git
-   cd vehicle-crud
+   git clone https://github.com/seuusuario/vehicleEntity-crud.git
+   cd vehicleEntity-crud
