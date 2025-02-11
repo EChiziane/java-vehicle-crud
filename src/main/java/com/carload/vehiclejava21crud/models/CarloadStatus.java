@@ -2,14 +2,14 @@ package com.carload.vehiclejava21crud.models;
 
 public enum CarloadStatus {
 
-    CREATED("criado"),
-    ENTREGUE("entregue"),
-    PROGRESS("progress"),
-    TERMINADO("terminado");
+    CRIADA,               // A carrada foi registrada no sistema
+    EM_TRANSPORTE,        // A carrada está em deslocamento
+    ENTREGUE,             // A carrada foi entregue com sucesso
+    CANCELADA,            // A carrada foi cancelada antes da entrega
+    DEVOLVIDA;            // A carrada foi devolvida ao remetente
+
 
     private String status;
 
-    private CarloadStatus(String status) {
-        this.status = status;
-    }
+
 }
