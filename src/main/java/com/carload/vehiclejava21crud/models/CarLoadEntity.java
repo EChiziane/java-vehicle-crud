@@ -10,7 +10,7 @@ import java.util.UUID;
 
 
 @Entity
-@Table(name="tb_carload")
+@Table(name="tb_carload1")
 @Getter
 @Setter
 public class CarLoadEntity implements Serializable {
@@ -20,8 +20,8 @@ public class CarLoadEntity implements Serializable {
    @GeneratedValue(strategy = GenerationType.AUTO)
    private UUID id;
     private String ClientName;
-    private String ClienNumber;
-    private String Destino;
+    private String ClientNumber;
+    private String destino;
     private String valorPago;
     private CarloadStatus status;
 

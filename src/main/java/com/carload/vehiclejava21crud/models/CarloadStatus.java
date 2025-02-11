@@ -2,8 +2,10 @@ package com.carload.vehiclejava21crud.models;
 
 public enum CarloadStatus {
 
-    CRIADO("criado"),
-    ENTREGUE("entregue");
+    CREATED("criado"),
+    ENTREGUE("entregue"),
+    PROGRESS("progress"),
+    TERMINADO("terminado");
 
     private String status;
 

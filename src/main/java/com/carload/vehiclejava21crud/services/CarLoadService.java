@@ -27,4 +27,12 @@ public class CarLoadService {
     public CarLoadEntity saveCarload(CarLoadEntity carLoadEntity){
         return carLaodaRepository.save(carLoadEntity);
     }
+@Transactional
+    public void deleteCarload(UUID id){carLaodaRepository.deleteById(id);}
+
+public CarLoadEntity updateCarload(CarLoadEntity carLoad){
+        carLaodaRepository.save(carLoad);
+        return carLoad;
+}
+
 }
