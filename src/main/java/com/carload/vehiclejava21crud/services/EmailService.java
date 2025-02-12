@@ -1,7 +1,6 @@
 package com.carload.vehiclejava21crud.services;
 
 
-
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.JavaMailSender;

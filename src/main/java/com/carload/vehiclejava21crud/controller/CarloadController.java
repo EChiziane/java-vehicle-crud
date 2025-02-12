@@ -1,6 +1,7 @@
 package com.carload.vehiclejava21crud.controller;
 
 import com.carload.vehiclejava21crud.models.CarLoadEntity;
+import com.carload.vehiclejava21crud.models.CarloadStatus;
 import com.carload.vehiclejava21crud.models.dtos.CarLoadInputDto;
 import com.carload.vehiclejava21crud.models.dtos.CarLoadOutPutDto;
 import com.carload.vehiclejava21crud.services.CarLoadService;
@@ -27,6 +28,21 @@ public class CarloadController {
         List<CarLoadEntity> carLoads= carLoadService.findAllCarLoads();
         return carLoads;
     }
+
+
+
+    @GetMapping("/entreges")
+    public List<CarLoadEntity> showEntreguesCarLoads(){
+        List<CarLoadEntity> carLoads= carLoadService.findCarLoadsByStatus(CarloadStatus.ENTREGUE);
+        return carLoads;
+    }
+
+    @GetMapping("/progress")
+    public List<CarLoadEntity> showProgressCarLoads(){
+        List<CarLoadEntity> carLoads= carLoadService.findCarLoadsByStatus(CarloadStatus.EM_TRANSPORTE);
+        return carLoads;
+    }
+
 
     @PostMapping
     public CarLoadEntity createCarload(@RequestBody CarLoadOutPutDto carLoadEntity){

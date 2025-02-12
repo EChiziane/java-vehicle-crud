@@ -1,7 +1,9 @@
 package com.carload.vehiclejava21crud.services;
 
 import com.carload.vehiclejava21crud.models.CarLoadEntity;
-import com.carload.vehiclejava21crud.repositories.CarLaodaRepository;
+
+import com.carload.vehiclejava21crud.models.CarloadStatus;
+import com.carload.vehiclejava21crud.repositories.CarLoadRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -11,28 +13,40 @@ import java.util.UUID;
 
 @Service
 public class CarLoadService {
-    private final CarLaodaRepository carLaodaRepository;
-    public CarLoadService(CarLaodaRepository carLaodaRepository) {
-        this.carLaodaRepository=carLaodaRepository;
+    private final CarLoadRepository carLoadRepository;
+
+    public CarLoadService(CarLoadRepository carLoadRepository) {
+        this.carLoadRepository = carLoadRepository;
     }
 
-    public List<CarLoadEntity> findAllCarLoads(){
-        return carLaodaRepository.findAll();
+    public List<CarLoadEntity> findAllCarLoads() {
+        return carLoadRepository.findAll();
     }
 
-    public Optional<CarLoadEntity>findCarloadById(UUID id){
-        return carLaodaRepository.findById(id);
+
+    public List<CarLoadEntity> findCarLoadsByStatus(CarloadStatus status) {
+        return carLoadRepository.findByStatus(status);
     }
+
+    public Optional<CarLoadEntity> findCarloadById(UUID id) {
+        return carLoadRepository.findById(id);
+    }
+
     @Transactional
-    public CarLoadEntity saveCarload(CarLoadEntity carLoadEntity){
-        return carLaodaRepository.save(carLoadEntity);
+    public CarLoadEntity saveCarload(CarLoadEntity carLoadEntity) {
+        return carLoadRepository.save(carLoadEntity);
     }
-@Transactional
-    public void deleteCarload(UUID id){carLaodaRepository.deleteById(id);}
 
-public CarLoadEntity updateCarload(CarLoadEntity carLoad){
-        carLaodaRepository.save(carLoad);
+    @Transactional
+    public void deleteCarload(UUID id) {
+        carLoadRepository.deleteById(id);
+    }
+
+    public CarLoadEntity updateCarload(CarLoadEntity carLoad) {
+        carLoadRepository.save(carLoad);
         return carLoad;
-}
+    }
+
+
 
 }
